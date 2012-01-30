@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:paddingBottom="10dp">
+   
+    <TextView
+    	android:id="@+courses/bar"
+    	android:background="@drawable/bar"
+    	android:textStyle="bold"
+    	android:textColor="#000"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center"/>   
+    	 
+    <ListView 
+   		android:id="@+id/android:list"
+    	android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_centerVertical="true"
+        android:dividerHeight="0.5dp"
+        android:divider="@drawable/bar"
+       	android:scrollingCache="false"
+       	android:smoothScrollbar="true"/>
+    <TextView 
+        android:id="@+id/android:empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Not enrolled in any classes."
+        android:textSize="18sp"/>
+        
+</RelativeLayout>

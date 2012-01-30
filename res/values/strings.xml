@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Droodle</string>
+    <string name="logout">Logout</string>
+    <string name="reminder">Create Calendar Reminder</string>
+</resources>

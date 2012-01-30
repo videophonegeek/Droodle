@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:focusable="true"
+	android:focusableInTouchMode="true"
+    android:gravity="center">
+ 
+    <ImageView
+    	android:src="@drawable/banner"
+    	android:layout_height="wrap_content"
+    	android:layout_width="202dp"/>
+   
+    <EditText 
+    	android:id="@+login/url"
+    	android:minLines="1"
+    	android:inputType="textUri"
+    	android:text="http://demo.moodle.net"
+    	android:layout_height="wrap_content"
+    	android:layout_width="205dp"
+    	android:layout_marginTop="20dp"
+    	android:gravity="center"/>
+    <EditText 
+    	android:id="@+login/username"
+    	android:minLines="1" 
+    	android:selectAllOnFocus="true" 
+   	android:inputType="text" 
+    	android:layout_height="wrap_content"  
+    	android:text="student"   
+   	android:gravity="center" 
+    	android:layout_marginTop="10dp" 
+   	android:layout_width="203dp"/>
+    <EditText 
+	android:id="@+login/password"
+	android:minLines="1"
+	android:selectAllOnFocus="true"
+	android:inputType="textPassword"
+	android:layout_height="wrap_content"
+	android:text="demo"
+	android:gravity="center" 
+	android:layout_marginTop="10dp"
+	android:layout_width="205dp"/>
+    
+    <Button 
+    	android:id="@+login/loginButton"
+    	android:background="@drawable/login"
+    	android:layout_marginTop="20dp"
+    	android:layout_width="201dp"
+    	android:layout_height="wrap_content"/>    
+   
+</LinearLayout>
