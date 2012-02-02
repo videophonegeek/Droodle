@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.ivoid.droodle"
-      android:versionCode="10"
+      android:versionCode="12"
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="8" />
     
@@ -18,12 +18,13 @@
             </intent-filter>
         </activity>
         <activity android:name="CoursesActivity"
+        		  android:configChanges="orientation"
         		  android:theme="@android:style/Theme.Black.NoTitleBar">
  		</activity>
  		<activity android:name="AssignmentsActivity"
         		  android:theme="@android:style/Theme.Black.NoTitleBar">
  		</activity>
- 		<activity android:name="com.ivoid.droodle.AssignmentActivity"
+ 		<activity android:name="AssignmentActivity"
         		  android:theme="@android:style/Theme.Black.NoTitleBar">
  		</activity>
     </application>

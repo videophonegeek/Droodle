@@ -127,43 +127,46 @@ public class LoginActivity extends Activity
 			goHome();
 		}
 
-		progressDialog = ProgressDialog.show(this, "", "Fetching Student...", true);
-		
-		new Thread(new Runnable()
-		{			
-			@Override
-			public void run()
-			{		
-				Base64 cryptor = new Base64();
-				
-				fetchJSON(
-							cryptor.encode(creds.get("username")), 
-							cryptor.encode(creds.get("password")), 
-							creds.get("url")
-						 );
-				
-				HttpResponse response = Globals.httphelper.getHttpResponse();
-				
-				if (response == null)
-					loginResult = "Server unavailable, try again later.";
-				
-				else
-				{
-					Globals.httphelper.setHeader(response.getFirstHeader("Cookie")); 
+		else
+		{
+			progressDialog = ProgressDialog.show(this, "", "Fetching Student...", true);
+			
+			new Thread(new Runnable()
+			{			
+				@Override
+				public void run()
+				{		
+					Base64 cryptor = new Base64();
 					
-					try
+					fetchJSON(
+								cryptor.encode(creds.get("username")), 
+								cryptor.encode(creds.get("password")), 
+								creds.get("url")
+							 );
+					
+					HttpResponse response = Globals.httphelper.getHttpResponse();
+					
+					if (response == null)
+						loginResult = "Server unavailable, try again later.";
+					
+					else
 					{
-						json=new JSONObject(EntityUtils.toString(response.getEntity()));
-					} catch (Exception e){
-						if (saveCredentials)
-							loginResult = "Invalid username or password.";
-						else
-							loginResult = "Server error, try again later.";
+						Globals.httphelper.setHeader(response.getFirstHeader("Cookie")); 
+						
+						try
+						{
+							json=new JSONObject(EntityUtils.toString(response.getEntity()));
+						} catch (Exception e){
+							if (saveCredentials)
+								loginResult = "Invalid username or password.";
+							else
+								loginResult = "Server error, try again later.";
+						}
 					}
+					progressHandler.sendEmptyMessage(0);	
 				}
-				progressHandler.sendEmptyMessage(0);	
-			}
-		}).start();
+			}).start();
+		}
 	}
 	
 	private void fetchJSON(String user, String pass, String url)

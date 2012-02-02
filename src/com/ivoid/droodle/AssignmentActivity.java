@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AssignmentActivity extends Activity
 {
@@ -23,6 +24,9 @@ public class AssignmentActivity extends Activity
 	private TextView   turned_in;
 	private TextView   status;
 	
+	private void showDialog(String stuff)
+	{ Toast.makeText(this, stuff,Toast.LENGTH_LONG).show(); }
+	
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState); 
@@ -32,6 +36,11 @@ public class AssignmentActivity extends Activity
 		
 		if (!Globals.assignment.wasFetched())
 			Globals.assignment.populateAssignment();
+		if (!Globals.assignment.wasFetched())
+		{
+			showDialog("Assignment failed to fetch.");
+			finish();
+		}
 		
 		status = (TextView) findViewById(R.assignment.status);
 		due = (TextView) findViewById(R.assignment.due);
