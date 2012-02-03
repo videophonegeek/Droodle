@@ -39,11 +39,14 @@ public class LoginActivity extends Activity
 	private Map<String, String> creds;
 	private String loginResult = "";
 	private boolean saveCredentials;
+	private Globals app;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{	
 		super.onCreate(savedInstanceState);
+		
+		app = ((Globals)getApplicationContext());
 		
 		if (!Preferences.isLogged(this))
 			setupLoginView();
@@ -144,14 +147,14 @@ public class LoginActivity extends Activity
 								creds.get("url")
 							 );
 					
-					HttpResponse response = Globals.httphelper.getHttpResponse();
+					HttpResponse response = app.httphelper.getHttpResponse();
 					
 					if (response == null)
 						loginResult = "Server unavailable, try again later.";
 					
 					else
 					{
-						Globals.httphelper.setHeader(response.getFirstHeader("Cookie")); 
+						app.httphelper.setHeader(response.getFirstHeader("Cookie")); 
 						
 						try
 						{
@@ -176,7 +179,7 @@ public class LoginActivity extends Activity
 		nameValuePairs.add(new BasicNameValuePair("password", pass));
 		nameValuePairs.add(new BasicNameValuePair("url", url));
 		try {
-			Globals.httphelper.post("getCourses", nameValuePairs);
+			app.httphelper.post("getCourses", nameValuePairs);
 		} catch (Exception e){}
 	}
 
@@ -188,7 +191,7 @@ public class LoginActivity extends Activity
 				saveLogin();
     		
 			Student student = new Student(json);
-			Globals.student = student;
+			app.student = student;
 				
 			Intent myIntent = new Intent (this, CoursesActivity.class);
 			finish();  

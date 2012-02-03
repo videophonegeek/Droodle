@@ -23,6 +23,7 @@ public class AssignmentActivity extends Activity
 	private TextView   due;
 	private TextView   turned_in;
 	private TextView   status;
+	private Globals app;
 	
 	private void showDialog(String stuff)
 	{ Toast.makeText(this, stuff,Toast.LENGTH_LONG).show(); }
@@ -32,11 +33,13 @@ public class AssignmentActivity extends Activity
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.assignment);
 		
-		((TextView) findViewById(R.assignment.bar)).setText(Globals.assignment.getTitle());
+		app = ((Globals)getApplicationContext());
 		
-		if (!Globals.assignment.wasFetched())
-			Globals.assignment.populateAssignment();
-		if (!Globals.assignment.wasFetched())
+		((TextView) findViewById(R.assignment.bar)).setText(app.assignment.getTitle());
+		
+		if (!app.assignment.wasFetched())
+			app.assignment.populateAssignment(app.httphelper);
+		if (!app.assignment.wasFetched())
 		{
 			showDialog("Assignment failed to fetch.");
 			finish();
@@ -50,13 +53,13 @@ public class AssignmentActivity extends Activity
 		available_from = (TextView) findViewById(R.assignment.available_from);
 		turned_in = (TextView) findViewById(R.assignment.turned_in); 
 		
-		description.setText(Globals.assignment.getDescription());
-		status.setText(Globals.assignment.getStatus());
-		due.setText(Globals.assignment.getDue());
-		available_from.setText(Globals.assignment.getAvailableFrom());
-		turned_in.setText(Globals.assignment.getTurnedIn());
-		grade.setText(Globals.assignment.getGrade());
-		comment.setText(Globals.assignment.getComment());
+		description.setText(app.assignment.getDescription());
+		status.setText(app.assignment.getStatus());
+		due.setText(app.assignment.getDue());
+		available_from.setText(app.assignment.getAvailableFrom());
+		turned_in.setText(app.assignment.getTurnedIn());
+		grade.setText(app.assignment.getGrade());
+		comment.setText(app.assignment.getComment());
 	}
 	
 	private boolean setReminder()
@@ -64,7 +67,7 @@ public class AssignmentActivity extends Activity
 		Calendar now = Calendar.getInstance();
 		Calendar due = Calendar.getInstance();
 
-		Date dueDate = new Date(Globals.assignment.getDue());
+		Date dueDate = new Date(app.assignment.getDue());
 		due.setTime(dueDate);
 
 		Intent intent = new Intent(Intent.ACTION_EDIT);
@@ -80,7 +83,7 @@ public class AssignmentActivity extends Activity
 		}
 		
 		intent.putExtra("allDay", false);
-		intent.putExtra("title", Globals.assignment.getTitle());
+		intent.putExtra("title", app.assignment.getTitle());
 		startActivity(intent);
 		return true;
 	}
@@ -88,7 +91,7 @@ public class AssignmentActivity extends Activity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		if (!Globals.assignment.getDone() && !Globals.assignment.getNoDate())
+		if (!app.assignment.getDone() && !app.assignment.getNoDate())
 		{
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.assignment_menu, menu);

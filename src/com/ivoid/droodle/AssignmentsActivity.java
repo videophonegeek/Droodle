@@ -17,18 +17,21 @@ public class AssignmentsActivity extends ListActivity
 {	
 	private ArrayList<String> assignmentNameList;
 	private ArrayAdapter<String> assignmentListAdapter;
+	private Globals app;
 	
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.assignments);
 		
-		((TextView) findViewById(R.assignments.bar)).setText(Globals.course.getTitle());
+		app = ((Globals)getApplicationContext());
+		
+		((TextView) findViewById(R.assignments.bar)).setText(app.course.getTitle());
 		
 		assignmentNameList    = new ArrayList<String>();
 		assignmentListAdapter = new ArrayAdapter<String>(this, R.layout.list_item, assignmentNameList);
 		
-		for (Assignment a: Globals.course.getAssignments())
+		for (Assignment a: app.course.getAssignments())
 			assignmentNameList.add(a.getTitle());
 		
 		setListAdapter(assignmentListAdapter);
@@ -39,14 +42,14 @@ public class AssignmentsActivity extends ListActivity
 	{
 		super.onListItemClick(l, v, position, id);
 		Intent i = new Intent(this, AssignmentActivity.class);
-		Globals.assignment = Globals.course.getAssignments()[position];
+		app.assignment = app.course.getAssignments()[position];
 		startActivity(i);
 	}
 	
 	@Override
 	public void onBackPressed()
     {	
-		Globals.course = null;
+		app.course = null;
 		finish();
     }
 }

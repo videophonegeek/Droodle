@@ -9,8 +9,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject; 
 
-import com.ivoid.droodle.Globals;
-
 public class Assignment
 {
 	private String title;
@@ -25,7 +23,7 @@ public class Assignment
 	private boolean fetched;
 	
 	public Assignment(JSONObject assignment)
-	{
+	{	
 		try{
 			title = assignment.getString("title");
 			link  = assignment.getString("link");
@@ -34,25 +32,25 @@ public class Assignment
 		fetched = false;
 	}
 	
-	private void fetchJSON() 
+	private void fetchJSON(HttpHelper httphelper) 
 	{	
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("link", link));
 		try {
-			Globals.httphelper.post("getAssignment", nameValuePairs);
+			httphelper.post("getAssignment", nameValuePairs);
 		} catch (Exception e) {}
 	}
 	
-	public void populateAssignment()
+	public void populateAssignment(HttpHelper httphelper)
 	{	
 		fetched = true;
 		
-		fetchJSON();
+		fetchJSON(httphelper);
 		
 		JSONObject json = null;
 		String tmp = null;
 		try{
-			tmp = EntityUtils.toString ( Globals.httphelper.getHttpResponse().getEntity() );
+			tmp = EntityUtils.toString ( httphelper.getHttpResponse().getEntity() );
 			json = new JSONObject( tmp );
 		} catch (Exception e) {
 			fetched = false;

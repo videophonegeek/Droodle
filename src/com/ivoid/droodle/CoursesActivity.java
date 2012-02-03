@@ -28,17 +28,20 @@ public class CoursesActivity extends ListActivity
 	private ArrayAdapter<String> mListAdapter; 
 	private ProgressDialog progressDialog;
 	private int coursePicked;
+	private Globals app;
 	
 	public void onCreate(Bundle savedInstanceState)
 	{	
 		super.onCreate(savedInstanceState); 
 		setContentView(R.layout.courses);
 		
-		((TextView) findViewById(R.courses.bar)).setText(Globals.student.getName());
+		app = ((Globals)getApplicationContext());
+		
+		((TextView) findViewById(R.courses.bar)).setText(app.student.getName());
 		
 		mList = new ArrayList<String>(); 
 		
-		for (Course c: Globals.student.courses)
+		for (Course c: app.student.courses)
 			mList.add(c.getTitle()); 
 	
 		mListAdapter = new ArrayAdapter<String>(this, R.layout.list_item, mList);
@@ -86,14 +89,14 @@ public class CoursesActivity extends ListActivity
 		
 		if (connectedToInternet())
 		{
-			if (!Globals.student.courses[position].wasFetched())
+			if (!app.student.courses[position].wasFetched())
 			{
 				progressDialog = ProgressDialog.show(this, "", "Fetching Course...", true);
 				
 				new Thread( new Runnable() {
 					public void run()
 					{
-						Globals.student.courses[position].populateAssignments();
+						app.student.courses[position].populateAssignments(app.httphelper);
 						progressHandler.sendEmptyMessage(0);
 					}
 				}).start();
@@ -107,9 +110,9 @@ public class CoursesActivity extends ListActivity
 	
 	private void goAssignments()
 	{
-		if (Globals.student.courses[coursePicked].wasFetched())
+		if (app.student.courses[coursePicked].wasFetched())
 		{
-			Globals.course = Globals.student.courses[coursePicked];
+			app.course = app.student.courses[coursePicked];
 			Intent intent = new Intent(this, AssignmentsActivity.class);	
 			startActivity(intent);
 		}

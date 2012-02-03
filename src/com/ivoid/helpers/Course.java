@@ -10,8 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ivoid.droodle.Globals;
-
 public class Course 
 {
 	private String title;
@@ -30,25 +28,25 @@ public class Course
 		fetched = false;
 	}
 	
-	private void fetchJSON() 
+	private void fetchJSON(HttpHelper httphelper) 
 	{	
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		nameValuePairs.add(new BasicNameValuePair("link", link));
 		try {
-			Globals.httphelper.post("getAssignments", nameValuePairs);
+			httphelper.post("getAssignments", nameValuePairs);
 		} catch (Exception e) {}
 	}	
 	
-	public void populateAssignments()
+	public void populateAssignments(HttpHelper httphelper)
 	{	
 		fetched = true;
 		
-		fetchJSON();
+		fetchJSON(httphelper);
 		
 		JSONArray jArray = null;
 		
 		try{
-			jArray = new JSONArray( EntityUtils.toString ( Globals.httphelper.getHttpResponse().getEntity() ) );
+			jArray = new JSONArray( EntityUtils.toString ( httphelper.getHttpResponse().getEntity() ) );
 		} catch (Exception e) {
 			fetched = false;
 			return;
