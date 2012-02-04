@@ -17,7 +17,7 @@
     	android:id="@+login/url"
     	android:minLines="1"
     	android:inputType="textUri"
-    	android:text="http://demo.moodle.net"
+    	android:text="http://school.demo.moodle.net"
     	android:layout_height="wrap_content"
     	android:layout_width="205dp"
     	android:layout_marginTop="20dp"
@@ -38,7 +38,7 @@
 	android:selectAllOnFocus="true"
 	android:inputType="textPassword"
 	android:layout_height="wrap_content"
-	android:text="demo"
+	android:text="moodle"
 	android:gravity="center" 
 	android:layout_marginTop="10dp"
 	android:layout_width="205dp"/>
